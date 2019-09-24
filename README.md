@@ -133,6 +133,14 @@ As a result, resource data is like so.
         ]
     }
 
+Or `*` is also available as default.
+
+    class ResourceController extends Controller
+    {
+        protected $auto_collections = [
+            '*' => ['value' => 'text']
+        ];
+
 with Vue.js
 
 If you'd like to get your resource data in Vue.js, a dedicated package called [v-flexible-resource](https://github.com/SUKOHI/v-flexible-resource) is available.

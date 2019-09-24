@@ -3,6 +3,7 @@
 namespace Sukohi\FlexibleResource\Traits;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationRuleParser;
 
 trait FlexibleResourceTrait {
@@ -27,19 +28,28 @@ trait FlexibleResourceTrait {
 
                 if(method_exists($this, $original_method)) {
 
-                    $original_resources = call_user_func_array([$this, $original_method], $args);
                     $key_name = 'key';
                     $value_name = 'value';
 
-                    if(isset($this->auto_collections[$original_method])) {
+                    if(isset($this->auto_collections)) {
 
-                        $auto_collection = $this->auto_collections[$original_method];
-                        list($collection_keys, $collection_values) = array_divide($auto_collection);
-                        $key_name = array_first($collection_keys);
-                        $value_name = array_first($collection_values);
+                        $auto_collection_keys = array_keys($this->auto_collections);
+
+                        if(in_array($original_method, $auto_collection_keys) ||
+                            in_array('*', $auto_collection_keys)) {
+
+                            $auto_collection = (in_array($original_method, $auto_collection_keys))
+                                ? $auto_collection = $this->auto_collections[$original_method]
+                                : $auto_collection = $this->auto_collections['*'];
+                            list($collection_keys, $collection_values) = array_divide($auto_collection);
+                            $key_name = Arr::first($collection_keys);
+                            $value_name = Arr::first($collection_values);
+
+                        }
 
                     }
 
+                    $original_resources = call_user_func_array([$this, $original_method], $args);
                     $collection_resources = [];
 
                     foreach ($original_resources as $key => $value) {
