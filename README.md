@@ -1,6 +1,6 @@
 # FlexibleResource
 A Laravel package that allows you to flexibly generate resource.  
-This package is maintained under L5.7.
+This package is maintained under L6.x.
 
 # Installation
 
