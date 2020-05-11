@@ -4,7 +4,7 @@ This package is maintained under L6.x.
 
 # Installation
 
-    composer require sukohi/flexible-resource:1.*
+    composer require sukohi/flexible-resource:2.*
 
 # Preparation
 
